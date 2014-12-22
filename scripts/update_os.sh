@@ -1,6 +1,8 @@
 #!/bin/bash
 
-echo "#update OS"
+OP="update OS"
+
+echo "# $OP"
 
 START=$(date +%s)
 
@@ -10,4 +12,4 @@ apt-get install -y language-pack-en 1> /dev/null 2>&1
 
 END=$(date +%s)
 DIFF=$(( $END - $START ))
-echo "It took $DIFF seconds"
+echo "´$OP´ took $DIFF seconds"

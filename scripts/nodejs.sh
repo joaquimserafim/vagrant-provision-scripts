@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo "#install 'n' a Node version management"
+OP="install 'n' a Node version management"
+
+echo "# $OP"
+
+START=$(date +%s)
 
 apt-get install -y g++ 1> /dev/null 2>&1
 g++ --version | sed -n 1p
@@ -15,3 +19,7 @@ n stable 1> /dev/null 2>&1
 echo "n version `n --version`"
 echo "node.js version `node -v`"
 echo "npm version `npm --version`"
+
+END=$(date +%s)
+DIFF=$(( $END - $START ))
+echo "´$OP´ took $DIFF seconds"

@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo "#install mongodb"
+OP="install mongodb"
+
+echo "# $OP"
+
+START=$(date +%s)
 
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10 1> /dev/null 2>&1
 
@@ -11,3 +15,7 @@ apt-get update 1> /dev/null 2>&1
 apt-get install -y mongodb-org 1> /dev/null 2>&1
 
 mongod --version | sed -n 1p
+
+END=$(date +%s)
+DIFF=$(( $END - $START ))
+echo "´$OP´ took $DIFF seconds"
