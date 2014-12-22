@@ -7,7 +7,3 @@ git --version
 
 apt-get install -y htop 1> /dev/null 2>&1
 htop --version | sed -n 1p
-
-rm -rf jq
-wget http://stedolan.github.io/jq/download/linux64/jq 1> /dev/null 2>&1
-chmod +x jq 1> /dev/null 2>&1
