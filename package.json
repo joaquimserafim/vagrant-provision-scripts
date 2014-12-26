@@ -1,0 +1,30 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "A bundle of scripts for shell provision in vagrant",
+  "main": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "cd test; vagrant up",
+    "provision": "cd test; vagrant provision",
+    "stop": "cd test; vagrant halt",
+    "destroy": "cd test; vagrant destroy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joaquimserafim/vagrant-provision-scripts.git"
+  },
+  "keywords": [
+    "vagrant",
+    "shell",
+    "provision"
+  ],
+  "author": "@joaquimserafim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaquimserafim/vagrant-provision-scripts/issues"
+  },
+  "homepage": "https://github.com/joaquimserafim/vagrant-provision-scripts"
+}
