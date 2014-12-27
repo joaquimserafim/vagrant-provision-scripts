@@ -58,5 +58,5 @@ Vagrant.configure("2") do |config|
   end
 
   # THE SOFTWARE TO BE INSTALL COME HERE
-  # config.vm.provision "shell", path: "https://raw.githubusercontent.com/joaquimserafim/vagrant-provision/master/provision.sh", args: ""
+  config.vm.provision "shell", path: "https://raw.githubusercontent.com/joaquimserafim/vagrant-provision/master/provision.sh", args: "git htop nodejs mongodb"
 end
