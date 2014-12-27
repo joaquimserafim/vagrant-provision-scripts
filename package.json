@@ -7,10 +7,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "cd test; vagrant up",
+    "test": "git clone git@github.com:joaquimserafim/vagrantfile-template.git test; cd test; vagrant up",
     "provision": "cd test; vagrant provision",
     "stop": "cd test; vagrant halt",
-    "destroy": "cd test; vagrant destroy",
+    "destroy": "cd test; vagrant destroy; cd ..; rm -rf test",
     "ssh": "cd test; vagrant ssh"
   },
   "repository": {

@@ -1,1 +1,3 @@
-tests/.vagrant
+test
+npm-debug.log
+.gitignore
