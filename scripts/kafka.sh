@@ -19,7 +19,7 @@ cd /home/kafka
 curl -s -LOk $KAFKA_URL
 tar zxf "$KAFKA_ENV.tgz"
 cd "$KAFKA_ENV"
-ls
+bin/kafka-server-start.sh config/server.properties &
 
 
 
