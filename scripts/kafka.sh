@@ -8,14 +8,20 @@ apt-get install -y zookeeperd 1> /dev/null 2>&1
 echo srvr | nc localhost 2181 | sed -n 1p
 
 # kafka
-
+SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
-KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/kafka_2.9.2-$KAFKA_VERSION.tgz"
+KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
+KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/$KAFKA_ENV.tgz"
 
 rm -rf /home/kafka
 mkdir /home/kafka
 cd /home/kafka
 curl -s -LOk $KAFKA_URL
+tar zxf "$KAFKA_ENV.tgz"
+cd "$KAFKA_ENV"
+ls
+
+
 
 
 
