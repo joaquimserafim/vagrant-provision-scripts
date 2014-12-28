@@ -13,7 +13,7 @@ KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/kafka_2.9.2-$KAFKA_V
 rm -rf /home/kafka
 mkdir /home/kafka
 cd /home/kafka
-curl -s $KAFKA_URL
+curl -s -LOk $KAFKA_URL
 
 
 
