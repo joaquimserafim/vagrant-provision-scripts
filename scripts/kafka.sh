@@ -12,15 +12,21 @@ SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
 KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/$KAFKA_ENV.tgz"
+KAFKA_DIR="/home/kafka"
 
-rm -rf /home/kafka
-mkdir /home/kafka
+if [ ! -d "$KAFKA_DIR" ]; then
+  mkdir $KAFKA_DIR
+fi
+
 cd /home/kafka
-curl -s -LOk $KAFKA_URL
-tar zxf "$KAFKA_ENV.tgz"
-cd "$KAFKA_ENV"
-bin/kafka-server-start.sh config/server.properties &
 
+if [ ! -f "$KAFKA_ENV" ]; then
+  curl -s -LOk $KAFKA_URL
+  tar zxf "$KAFKA_ENV.tgz"
+fi
+
+cd "$KAFKA_ENV"
+#bin/kafka-server-start.sh config/server.properties &
 
 
 
