@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # check if zookeeper is installed
-
 if service zookeeper status | grep -o -E '*[0-9]{3,5}' > /dev/null; then
   echo "'zookeeper' is running"
 else
