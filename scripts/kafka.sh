@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# check if zookeeper is installed
+
+if service zookeeper status | grep -o -E '*[0-9]{3,5}' > /dev/null; then
+  echo "'zookeeper' is running"
+fi
+
 SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
