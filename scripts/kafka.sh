@@ -18,6 +18,7 @@ KAFKA_DIR="/home/kafka"
 if [ ! -d "$KAFKA_DIR" ]; then
   mkdir $KAFKA_DIR
 fi
+echo "1"
 
 cd /home/kafka
 
@@ -25,11 +26,11 @@ if [ ! -f "$KAFKA_ENV" ]; then
   curl -s -LOk $KAFKA_URL
   tar zxf "$KAFKA_ENV.tgz"
 fi
+echo "2"
 
 cd "$KAFKA_ENV"
 #bin/kafka-server-start.sh config/server.properties &
-
-
+echo "3"
 
 
 
