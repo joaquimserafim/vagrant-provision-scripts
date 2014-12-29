@@ -5,7 +5,7 @@
 if service zookeeper status | grep -o -E '*[0-9]{3,5}' > /dev/null; then
   echo "'zookeeper' is running"
 else
-  echo "'zookeeper' is not running, exiting..."
+  echo "'zookeeper' is not running/installed, exiting..." >&2
   exit 1
 fi
 
