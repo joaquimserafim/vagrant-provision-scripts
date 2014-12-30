@@ -42,11 +42,11 @@ fi
 
 cd "$KAFKA_ENV"
 # start kafka
-bin/kafka-server-start.sh config/server.properties &
+#bin/kafka-server-start.sh config/server.properties &
 
 # testing if kafka is running
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-bin/kafka-topics.sh --list --zookeeper localhost:2181
+#bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+#bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
 #     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
