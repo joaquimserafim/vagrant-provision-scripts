@@ -8,8 +8,8 @@ else
   echo "'zookeeper' is not running/installed, exiting..." >&2
   exit 1
 fi
-DATE_=date
-echo "0 $DATE_"
+
+echo "0 - $(date)"
 
 SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
@@ -21,8 +21,7 @@ if [ ! -d "$KAFKA_DIR" ]; then
   mkdir $KAFKA_DIR
 fi
 
-DATE_=date
-echo "1 $DATE_"
+echo "1 - $(date)"
 
 cd /home/kafka
 
@@ -30,13 +29,13 @@ if [ ! -f "$KAFKA_ENV" ]; then
   curl -s -LOk $KAFKA_URL
   tar zxf "$KAFKA_ENV.tgz"
 fi
-DATE_=date
-echo "2 $DATE_"
+
+echo "2 - $(date)"
 
 cd "$KAFKA_ENV"
 #bin/kafka-server-start.sh config/server.properties &
-DATE_=date
-echo "3 $DATE_"
+
+echo "3 - $(date)"
 
 
 
