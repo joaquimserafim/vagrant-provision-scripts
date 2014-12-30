@@ -9,8 +9,6 @@ else
   exit 1
 fi
 
-echo "0 - $(date)"
-
 SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
@@ -21,23 +19,18 @@ if [ ! -d "$KAFKA_DIR" ]; then
   mkdir $KAFKA_DIR
 fi
 
-echo "1 - $(date)"
-
 cd /home/kafka
-
-echo "2 - $(date)"
 
 if [ ! -d "$KAFKA_ENV" ]; then
   curl -s -LOk $KAFKA_URL
   tar zxf "$KAFKA_ENV.tgz"
 fi
 
-echo "3 - $(date)"
-
 cd "$KAFKA_ENV"
-#bin/kafka-server-start.sh config/server.properties &
+# change the JVM heap size
+cat bin/kafka-server-start.sh | sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/" > bin/kafka-server-start.sh
 
-echo "4 - $(date)"
+#bin/kafka-server-start.sh config/server.properties &
 
 
 
