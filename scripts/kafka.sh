@@ -27,7 +27,7 @@ cd /home/kafka
 
 echo "2 - $(date)"
 
-if [ ! -f "$KAFKA_ENV" ]; then
+if [ ! -d "$KAFKA_ENV" ]; then
   curl -s -LOk $KAFKA_URL
   tar zxf "$KAFKA_ENV.tgz"
 fi
