@@ -43,8 +43,8 @@ fi
 cd "$KAFKA_ENV"
 # start kafka
 KAFKA_LOG_DIR="/var/log/kafka"
-if [ ! -d "$KAFKA_DIR" ]; then
-  mkdir $KAFKA_DIR
+if [ ! -d "$KAFKA_LOG_DIR" ]; then
+  mkdir $KAFKA_LOG_DIR
 fi
 nohup bin/kafka-server-start.sh config/server.properties > "$KAFKA_LOG_DIR/log_$(date +%s)" &
 
