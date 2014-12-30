@@ -46,11 +46,18 @@ KAFKA_LOG_DIR="/var/log/kafka"
 if [ ! -d "$KAFKA_LOG_DIR" ]; then
   mkdir $KAFKA_LOG_DIR
 fi
-nohup bin/kafka-server-start.sh config/server.properties > "$KAFKA_LOG_DIR/log_$(date +%s)" &
+nohup bin/kafka-server-start.sh config/server.properties > "$KAFKA_LOG_DIR/$(date +%s).log" &
+
+# check kafka is already running
+KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep | awk '{print $1}')
+
+while [ -d /proc/$KAFKA_PID ] ; do
+  sleep 1
+done &&
 
 # testing if kafka is running
-#bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-#bin/kafka-topics.sh --list --zookeeper localhost:2181
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
 #     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
