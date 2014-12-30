@@ -51,7 +51,7 @@ nohup bin/kafka-server-start.sh config/server.properties > "$KAFKA_LOG_DIR/$(dat
 # check kafka is already running
 KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep | awk '{print $1}')
 
-while [ -d /proc/$KAFKA_PID ] ; do
+while [ -d "/proc/$KAFKA_PID" ] ; do
   sleep 1
 done &&
 
