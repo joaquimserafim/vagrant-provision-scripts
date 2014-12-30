@@ -24,19 +24,27 @@ cd /home/kafka
 if [ ! -d "$KAFKA_ENV" ]; then
   curl -s -LOk $KAFKA_URL
   tar zxf "$KAFKA_ENV.tgz"
+  cd "$KAFKA_ENV"
+  # change the JVM heap size
+  cp bin/kafka-server-start.sh bin/kafka-server-start_old.sh
+  sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/g" bin/kafka-server-start_old.sh > bin/kafka-server-start.sh
+  rm -rf bin/kafka-server-start_old.sh
 fi
 
+cd ..
+
+SLF4J_URL="http://www.slf4j.org/dist/"
+SLF4J_VERSION="1.7.9"
+curl -s -LOk "$SLF4J_URLslf4j-$SLF4J_VERSIONtar.gz"
+# http://www.slf4j.org/dist/slf4j-1.7.9.tar.gz
+
 cd "$KAFKA_ENV"
-# change the JVM heap size
-cp bin/kafka-server-start.sh bin/kafka-server-start_old.sh
-sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/g" bin/kafka-server-start_old.sh > bin/kafka-server-start.sh
-rm -rf bin/kafka-server-start_old.sh
 # start kafka
-bin/kafka-server-start.sh config/server.properties &
+#bin/kafka-server-start.sh config/server.properties &
 
 # testing if kafka is running
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-bin/kafka-topics.sh --list --zookeeper localhost:2181
+#bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+#bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
 #     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
