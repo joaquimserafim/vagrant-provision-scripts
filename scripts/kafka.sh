@@ -29,16 +29,15 @@ if [ ! -d "$KAFKA_ENV" ]; then
   cp bin/kafka-server-start.sh bin/kafka-server-start_old.sh
   sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/g" bin/kafka-server-start_old.sh > bin/kafka-server-start.sh
   rm -rf bin/kafka-server-start_old.sh
+  cd ..
 fi
-
-cd ..
 
 # donwload slf4j :(
 SLF4J_URL="http://www.slf4j.org/dist"
 SLF4J_VERSION="1.7.2"
 curl -s -LOk "$SLF4J_URL/slf4j-$SLF4J_VERSION.tar.gz"
 tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
-cp -f "slf4j-$SLF4J_VERSION/slf4j-api-$SLF4J_VERSION.jar" "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/lib/"
+cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/lib/"
 
 cd "$KAFKA_ENV"
 # start kafka
