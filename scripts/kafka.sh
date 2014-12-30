@@ -33,11 +33,12 @@ fi
 
 cd ..
 
-SLF4J_URL="http://www.slf4j.org/dist/"
-SLF4J_VERSION="1.7.9"
-echo "$SLF4J_URLslf4j-$SLF4J_VERSION.tar.gz"
-curl -s -LOk "$SLF4J_URLslf4j-$SLF4J_VERSION.tar.gz"
-# http://www.slf4j.org/dist/slf4j-1.7.9.tar.gz
+# donwload slf4j :(
+SLF4J_URL="http://www.slf4j.org/dist"
+SLF4J_VERSION="1.7.2"
+curl -s -LOk "$SLF4J_URL/slf4j-$SLF4J_VERSION.tar.gz"
+tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
+cp -f "slf4j-$SLF4J_VERSION/slf4j-api-$SLF4J_VERSION.jar" "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/lib/"
 
 cd "$KAFKA_ENV"
 # start kafka
