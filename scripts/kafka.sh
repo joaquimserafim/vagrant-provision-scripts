@@ -30,23 +30,23 @@ if [ ! -d "$KAFKA_ENV" ]; then
   sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/g" bin/kafka-server-start_old.sh > bin/kafka-server-start.sh
   rm -rf bin/kafka-server-start_old.sh
   cd ..
+  # donwload slf4j to fix the miss of one jar in kafka :(
+  echo "slf4j - fix the miss of one jar by kafka"
+  SLF4J_URL="http://www.slf4j.org/dist"
+  SLF4J_VERSION="1.7.2"
+  curl -s -LOk "$SLF4J_URL/slf4j-$SLF4J_VERSION.tar.gz"
+  tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
+  cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/libs/"
+  rm -rf slf4j-1.7.2*
 fi
-
-# donwload slf4j :(
-SLF4J_URL="http://www.slf4j.org/dist"
-SLF4J_VERSION="1.7.2"
-curl -s -LOk "$SLF4J_URL/slf4j-$SLF4J_VERSION.tar.gz"
-tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
-cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/libs/"
-rm -rf slf4j-1.7.2*
 
 cd "$KAFKA_ENV"
 # start kafka
-#bin/kafka-server-start.sh config/server.properties &
+bin/kafka-server-start.sh config/server.properties &
 
 # testing if kafka is running
-#bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-#bin/kafka-topics.sh --list --zookeeper localhost:2181
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
 #     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
