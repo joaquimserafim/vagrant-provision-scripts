@@ -35,7 +35,8 @@ cd ..
 
 SLF4J_URL="http://www.slf4j.org/dist/"
 SLF4J_VERSION="1.7.9"
-curl -s -LOk "$SLF4J_URLslf4j-$SLF4J_VERSIONtar.gz"
+echo "$SLF4J_URLslf4j-$SLF4J_VERSION.tar.gz"
+curl -s -LOk "$SLF4J_URLslf4j-$SLF4J_VERSION.tar.gz"
 # http://www.slf4j.org/dist/slf4j-1.7.9.tar.gz
 
 cd "$KAFKA_ENV"
