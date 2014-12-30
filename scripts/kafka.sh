@@ -28,8 +28,8 @@ fi
 
 cd "$KAFKA_ENV"
 # change the JVM heap size
-mv bin/kafka-server-start.sh bin/kafka-server-start.sh_BACK
-sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/g" bin/kafka-server-start.sh > bin/kafka-server-start.sh
+cp bin/kafka-server-start.sh bin/kafka-server-start.sh_BACK
+sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/g" bin/kafka-server-start_BACK.sh > bin/kafka-server-start.sh
 #cat bin/kafka-server-start.sh | sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/" > bin/kafka-server-start.sh
 
 #bin/kafka-server-start.sh config/server.properties &
