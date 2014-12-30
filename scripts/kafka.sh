@@ -37,7 +37,8 @@ SLF4J_URL="http://www.slf4j.org/dist"
 SLF4J_VERSION="1.7.2"
 curl -s -LOk "$SLF4J_URL/slf4j-$SLF4J_VERSION.tar.gz"
 tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
-cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/lib/"
+cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/libs/"
+rm -rf slf4j-1.7.2*
 
 cd "$KAFKA_ENV"
 # start kafka
