@@ -25,17 +25,19 @@ echo "1 - $(date)"
 
 cd /home/kafka
 
+echo "2 - $(date)"
+
 if [ ! -f "$KAFKA_ENV" ]; then
   curl -s -LOk $KAFKA_URL
   tar zxf "$KAFKA_ENV.tgz"
 fi
 
-echo "2 - $(date)"
+echo "3 - $(date)"
 
 cd "$KAFKA_ENV"
 #bin/kafka-server-start.sh config/server.properties &
 
-echo "3 - $(date)"
+echo "4 - $(date)"
 
 
 
