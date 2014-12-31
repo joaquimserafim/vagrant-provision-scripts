@@ -38,7 +38,8 @@ slf4j(){
 
 change_jvm_head_size() {
   cp bin/kafka-server-start.sh bin/kafka-server-start_old.sh
-  sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M -Xms128M\"/g" bin/kafka-server-start_old.sh > bin/kafka-server-start.sh
+  sed "s/KAFKA_HEAP_OPTS=\"-Xmx1G -Xms1G\"/KAFKA_HEAP_OPTS=\"-Xmx256M \
+    -Xms128M\"/g" bin/kafka-server-start_old.sh > bin/kafka-server-start.sh
   rm -rf bin/kafka-server-start_old.sh
   cd ..
 }

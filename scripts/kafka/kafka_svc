@@ -21,7 +21,8 @@ start() {
      "$KAFKA_DIR/config/server.properties" > \
      "$KAFKA_LOG_DIR/$(date +%s).log" &
     sleep 5
-    echo "kafka PID: $(ps -eo pid,command | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $1}')"
+    echo "kafka PID: $(ps -eo pid,command | grep kafka | \
+      grep -v kafka_svc | grep -v grep | awk '{print $1}')"
     exit 0
   else
     echo "Warning: kafka is alredy running!" >&2
@@ -30,7 +31,8 @@ start() {
 }
 
 stop() {
-  for pid in `ps -ef | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $2}'`; do
+  for pid in `ps -ef | grep kafka | grep -v kafka_svc | \
+  grep -v grep | awk '{print $2}'`; do
     kill -15 $pid
     echo "sent a SIGTERM to kafka($pid)..."
     sleep 5
