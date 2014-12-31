@@ -49,11 +49,11 @@ fi
 nohup bin/kafka-server-start.sh config/server.properties > "$KAFKA_LOG_DIR/$(date +%s).log" &
 
 # check kafka is already running
-KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep | awk '{print $1}')
-
-while [ -d "/proc/$KAFKA_PID" ] ; do
+KAFKA_PID=""
+while [ -z "$KAFKA_PID" ] && [ -d "/proc/$KAFKA_PID" ]; do
+  KAFKA_PID=$(ps -eo pid,command | grep zookeeper | grep -v grep | awk '{print $1}')
   sleep 1
-done &&
+done
 
 # testing if kafka is running
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
