@@ -7,32 +7,62 @@ KAFKA_VERSION="0.8.1.1"
 KAFKA_DIR="$KAFKA_HOME/kafka_$SACLA_VERSION-$KAFKA_VERSION"
 KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $1}')
 
+check_sudo() {
+  if [ "$EUID" -ne 0 ]
+    then echo "Please you need to use 'sudo' to run this command" >&2
+    exit 1
+  fi
+}
+
+start() {
+  if [ -z "$KAFKA_PID" ]; then
+    echo "starting kafka..."
+    nohup "$KAFKA_DIR/bin/kafka-server-start.sh" \
+     "$KAFKA_DIR/config/server.properties" > \
+     "$KAFKA_LOG_DIR/$(date +%s).log" &
+    sleep 5
+    echo "kafka PID: $(ps -eo pid,command | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $1}')"
+    exit 0
+  else
+    echo "Warning: kafka is alredy running!" >&2
+    exit 1
+  fi
+}
+
+stop() {
+  for pid in `ps -ef | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $2}'`; do
+    kill -15 $pid
+    echo "sent a SIGTERM to kafka($pid)..."
+    sleep 5
+  done
+  KAFKA_PID=""
+}
+
+status() {
+  if [ -z "$KAFKA_PID" ]; then
+    echo "kafka isn't running"
+  else
+    echo "kafka is running with the PID $KAFKA_PID"
+  fi
+}
+
 case "$1" in
   start)
-    if [ -z "$KAFKA_PID" ]; then
-      echo "starting kafka..."
-      nohup "$KAFKA_DIR/bin/kafka-server-start.sh" \
-       "$KAFKA_DIR/config/server.properties" > \
-       "$KAFKA_LOG_DIR/$(date +%s).log" &
-      sleep 5
-      echo "kafka PID: $(ps -eo pid,command | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $1}')"
-      exit 0
-    else
-      echo "Warning: kafka is alredy running!" >&2
-      exit 1
-    fi
+    check_sudo
+    start
     ;;
   stop)
-    for pid in `ps -ef | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $2}'`; do
-      kill -15 $pid
-      echo "sent a SIGTERM to kafka($pid)..."
-      sleep 5
-    done
+    check_sudo
+    stop
     exit 0
     ;;
   restart)
-      kafka_svc stop
-      kafka_svc start
+    check_sudo
+    stop
+    start
+    ;;
+  status)
+    status
     ;;
   *)
     echo "Usage: start|stop|restart"
