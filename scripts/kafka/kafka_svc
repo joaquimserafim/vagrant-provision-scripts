@@ -5,7 +5,7 @@ KAFKA_HOME="/home/kafka"
 SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_DIR="$KAFKA_HOME/kafka_$SACLA_VERSION-$KAFKA_VERSION"
-KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep | awk '{print $1}')
+KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $1}')
 
 case "$1" in
   start)
@@ -15,7 +15,7 @@ case "$1" in
        "$KAFKA_DIR/config/server.properties" > \
        "$KAFKA_LOG_DIR/$(date +%s).log" &
       sleep 5
-      echo "kafka PID: $(ps -eo pid,command | grep kafka | grep -v grep | awk '{print $1}')"
+      echo "kafka PID: $(ps -eo pid,command | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $1}')"
       exit 0
     else
       echo "Warning: kafka is alredy running!" >&2
@@ -23,12 +23,11 @@ case "$1" in
     fi
     ;;
   stop)
-    re='^[0-9]+$'
-    if [ $KAFKA_PID -ne 0 -o $KAFKA_PID -eq 0 2>/dev/null ]; then
-      kill -15 $KAFKA_PID
-      echo "sent a SIGTERM to kafka..."
+    for pid in `ps -ef | grep kafka | grep -v kafka_svc | grep -v grep | awk '{print $2}'`; do
+      kill -15 $pid
+      echo "sent a SIGTERM to kafka($pid)..."
       sleep 5
-    fi
+    done
     exit 0
     ;;
   restart)
