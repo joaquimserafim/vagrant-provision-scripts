@@ -19,7 +19,7 @@ if [ ! -d "$KAFKA_HOME" ]; then
   mkdir $KAFKA_HOME
 fi
 
-cd /home/kafka
+cd $KAFKA_HOME
 
 if [ ! -d "$KAFKA_ENV" ]; then
   curl -s -LOk $KAFKA_URL
@@ -39,8 +39,8 @@ if [ ! -d "$KAFKA_ENV" ]; then
   cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/libs/"
   rm -rf slf4j-1.7.2*
   # cp the kafka_svc to /usr/local/bin
-  cd /usr/local/bin
-  curl -s -LOk https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc
+  curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc > /usr/local/bin/kafka_svc
+  chmod +x /usr/local/bin/kafka_svc
 fi
 
 cd "$KAFKA_ENV"
