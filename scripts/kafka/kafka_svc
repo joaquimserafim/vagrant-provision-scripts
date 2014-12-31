@@ -27,7 +27,7 @@ case "$1" in
     if [ $KAFKA_PID -ne 0 -o $KAFKA_PID -eq 0 2>/dev/null ]; then
       kill -15 $KAFKA_PID
       echo "sent a SIGTERM to kafka..."
-        sleep 5
+      sleep 5
     fi
     exit 0
     ;;
