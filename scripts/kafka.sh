@@ -13,10 +13,10 @@ SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
 KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/$KAFKA_ENV.tgz"
-KAFKA_DIR="/home/kafka"
+KAFKA_HOME="/home/kafka"
 
-if [ ! -d "$KAFKA_DIR" ]; then
-  mkdir $KAFKA_DIR
+if [ ! -d "$KAFKA_HOME" ]; then
+  mkdir $KAFKA_HOME
 fi
 
 cd /home/kafka
@@ -38,6 +38,8 @@ if [ ! -d "$KAFKA_ENV" ]; then
   tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
   cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/libs/"
   rm -rf slf4j-1.7.2*
+  # cp the kafka_svc to /usr/local/bin
+  
 fi
 
 cd "$KAFKA_ENV"
@@ -56,8 +58,13 @@ while [ -z "$KAFKA_PID" ] && [ -d "/proc/$KAFKA_PID" ]; do
 done
 
 # testing if kafka is running
+echo "a little test with kafka..."
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
-bin/kafka-topics.sh --list --zookeeper localhost:2181
+KAFKA_RES=$(bin/kafka-topics.sh --list --zookeeper localhost:2181)
+echo "response: $KAFKA_RES"
+
+# a way to restart/start/stop kafka
+
 
 #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
 #     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
