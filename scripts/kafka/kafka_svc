@@ -23,7 +23,6 @@ start() {
     sleep 5
     echo "kafka PID: $(ps -eo pid,command | grep kafka | \
       grep -v kafka_svc | grep -v grep | awk '{print $1}')"
-    exit 0
   else
     echo "Warning: kafka is alredy running!" >&2
     exit 1
@@ -56,7 +55,6 @@ case "$1" in
   stop)
     check_sudo
     stop
-    exit 0
     ;;
   restart)
     check_sudo
@@ -68,6 +66,5 @@ case "$1" in
     ;;
   *)
     echo "Usage: start|stop|restart"
-    exit 0
     ;;
 esac
