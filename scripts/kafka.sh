@@ -60,7 +60,7 @@ start_kafka() {
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
-  kafka_svc stop
+  #kafka_svc stop
   kafka_svc start
 }
 
@@ -79,10 +79,7 @@ test_kafka() {
   echo "response: $KAFKA_RES"
 }
 
-kafka_monitor() {
-  cd $KAFKA_HOME
-  curl -s -LOk $KAFKA_MONITOR_URL
-}
+
 
 if [ ! -d "$KAFKA_HOME" ]; then
   mkdir $KAFKA_HOME
@@ -100,10 +97,3 @@ else
 cd "$KAFKA_ENV"
 start_kafka
 test_kafka
-
-#java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
-#     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
-#     --zk vagrant-ubuntu-trusty-64 \
-#     --port 8080 \
-#     --refresh 10.seconds \
-#     --retain 2.days
