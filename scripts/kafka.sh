@@ -100,7 +100,6 @@ else
 cd "$KAFKA_ENV"
 start_kafka
 test_kafka
-kafka_monitor
 
 #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
 #     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
