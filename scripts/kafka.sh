@@ -61,7 +61,8 @@ start_kafka() {
     mkdir $KAFKA_LOG_DIR
   fi
   kafka_svc stop
-  kafka_svc start
+  nohup bin/kafka-server-start.sh config/server.properties > \
+  "$KAFKA_LOG_DIR/$(date +%s).log" &
 }
 
 test_kafka() {
