@@ -60,7 +60,7 @@ start_kafka() {
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
-  #kafka_svc stop
+  kafka_svc stop
   kafka_svc start
 }
 
@@ -79,7 +79,10 @@ test_kafka() {
   echo "response: $KAFKA_RES"
 }
 
-
+kafka_monitor() {
+  cd $KAFKA_HOME
+  curl -s -LOk $KAFKA_MONITOR_URL
+}
 
 if [ ! -d "$KAFKA_HOME" ]; then
   mkdir $KAFKA_HOME
@@ -92,8 +95,9 @@ if [ ! -d "$KAFKA_ENV" ]; then
   change_jvm_head_size
   slf4j
   set_kafka_svc
-else
+fi
 
 cd "$KAFKA_ENV"
 start_kafka
 test_kafka
+kafka_monitor
