@@ -28,7 +28,7 @@ KAFKA_MONITOR_URL="https://github.com/quantifind/\
 KafkaOffsetMonitor/releases/download/v$KAFKA_MONITOR_VERSION\
 /KafkaOffsetMonitor-assembly-$KAFKA_MONITOR_VERSION.jar"
 
-kafka_svc() {
+set_kafka_svc() {
   curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc > \
   /usr/local/bin/kafka_svc
   chmod +x /usr/local/bin/kafka_svc
@@ -60,8 +60,8 @@ start_kafka() {
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
-  nohup bin/kafka-server-start.sh config/server.properties > \
-  "$KAFKA_LOG_DIR/$(date +%s).log" &
+  kafka_svc stop
+  kafka_svc start
 }
 
 test_kafka() {
@@ -94,8 +94,8 @@ if [ ! -d "$KAFKA_ENV" ]; then
   dwl_kafka
   change_jvm_head_size
   slf4j
-  kafka_svc
-fi
+  set_kafka_svc
+else
 
 cd "$KAFKA_ENV"
 start_kafka
