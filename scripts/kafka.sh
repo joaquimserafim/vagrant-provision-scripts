@@ -60,9 +60,12 @@ start_kafka() {
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
-  kafka_svc stop
+  
   nohup bin/kafka-server-start.sh config/server.properties > \
   "$KAFKA_LOG_DIR/$(date +%s).log" &
+  KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep\
+     | awk '{print $1}')
+  echo $KAFKA_PID > "$KAFKA_HOME/pid"
 }
 
 test_kafka() {
