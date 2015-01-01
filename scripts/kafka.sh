@@ -18,7 +18,15 @@ KAFKA_VERSION="0.8.1.1"
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
 KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/$KAFKA_ENV.tgz"
 KAFKA_HOME="/home/kafka"
+KAFKA_LOG_DIR="/var/log/kafka"
 
+SLF4J_URL="http://www.slf4j.org/dist"
+SLF4J_VERSION="1.7.2"
+
+KAFKA_MONITOR_VERSION="0.2.0"
+KAFKA_MONITOR_URL="https://github.com/quantifind/\
+KafkaOffsetMonitor/releases/download/v$KAFKA_MONITOR_VERSION\
+/KafkaOffsetMonitor-assembly-$KAFKA_MONITOR_VERSION.jar"
 
 kafka_svc() {
   curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc > \
@@ -28,8 +36,6 @@ kafka_svc() {
 
 slf4j(){
   echo "slf4j - fix the miss of one jar by kafka"
-  SLF4J_URL="http://www.slf4j.org/dist"
-  SLF4J_VERSION="1.7.2"
   curl -s -LOk "$SLF4J_URL/slf4j-$SLF4J_VERSION.tar.gz"
   tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
   cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/libs/"
@@ -51,7 +57,6 @@ dwl_kafka() {
 }
 
 start_kafka() {
-  KAFKA_LOG_DIR="/var/log/kafka"
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
@@ -74,6 +79,11 @@ test_kafka() {
   echo "response: $KAFKA_RES"
 }
 
+kafka_monitor() {
+  cd $KAFKA_HOME
+  curl -s -LOk $KAFKA_MONITOR_URL
+}
+
 if [ ! -d "$KAFKA_HOME" ]; then
   mkdir $KAFKA_HOME
 fi
@@ -90,6 +100,7 @@ fi
 cd "$KAFKA_ENV"
 start_kafka
 test_kafka
+kafka_monitor
 
 #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
 #     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
