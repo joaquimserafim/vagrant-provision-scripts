@@ -88,11 +88,11 @@ test_kafka() {
 
 kafka_monitor() {
   cd $KAFKA_HOME
-  if [ ! -f "KafkaOffsetMonitor-assembly-$KAFKA_MONITOR_VERSION.jar"]
+  if [ ! -f "KafkaOffsetMonitor-assembly-$KAFKA_MONITOR_VERSION.jar" ]; then
     curl -s -LOk $KAFKA_MONITOR_URL
   fi
-  #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
-  com.quantifind.kafka.offsetapp.OffsetGetterWeb \
+  java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
+    com.quantifind.kafka.offsetapp.OffsetGetterWeb \
     --zk localhost \
     --port 8080 \
     --refresh 10.seconds \
