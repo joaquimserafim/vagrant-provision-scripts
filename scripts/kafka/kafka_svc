@@ -5,7 +5,12 @@ KAFKA_HOME="/home/kafka"
 SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_DIR="$KAFKA_HOME/kafka_$SACLA_VERSION-$KAFKA_VERSION"
-KAFKA_PID=$(<"$KAFKA_HOME/pid")
+
+if [ -f "$KAFKA_HOME/pid" ]; then
+  KAFKA_PID=$(<"$KAFKA_HOME/pid")
+else
+  KAFKA_PID=""
+fi
 
 check_sudo() {
   if [ "$EUID" -ne 0 ]
@@ -19,28 +24,25 @@ start() {
     echo "starting kafka..."
     nohup "$KAFKA_DIR/bin/kafka-server-start.sh" \
      "$KAFKA_DIR/config/server.properties" > \
-     "$KAFKA_LOG_DIR/$(date +%s).log" &
+     "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
+    echo $! > "$KAFKA_HOME/pid"
     sleep 5
-    KAFKA_PID=v$(ps -eo pid,command | grep kafka | \
-      grep -v kafka_svc | grep -v grep | awk '{print $1}')
-    echo $KAFKA_PID > "$KAFKA_HOME/pid"
-    echo "kafka PID: $KAFKA_PID"
+    echo "kafka PID: $(<$KAFKA_HOME/pid)"
   else
     echo "Warning: kafka is alredy running!" >&2
-    exit 1
   fi
 }
 
 stop() {
-  KAFKA_PID=$(<"$KAFKA_HOME/pid")
   #for pid in `ps -ef | grep kafka | grep -v kafka_svc | \
   #grep -v grep | awk '{print $2}'`; do
-  kill -15 $KAFKA_PID
-  echo "sent a SIGTERM to kafka($KAFKA_PID)..."
-  rm -rf "$KAFKA_HOME/pid"
-  sleep 5
-  #done
-  KAFKA_PID=""
+  if [ ! -z $KAFKA_PID ]; then
+    kill -15 $KAFKA_PID
+    echo "sent a SIGTERM to kafka($KAFKA_PID)..."
+    rm -rf "$KAFKA_HOME/pid"
+    sleep 5
+    KAFKA_PID=""
+  fi
 }
 
 status() {

@@ -13,6 +13,7 @@ check_zookeekper() {
 # before everything lets check if zookeeper is installed
 check_zookeekper
 
+SCRIPT_PID=$$
 SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
@@ -60,11 +61,13 @@ start_kafka() {
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
-  nohup bin/kafka-server-start.sh config/server.properties > \
-  "$KAFKA_LOG_DIR/$(date +%s).log" &
-  KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep\
-     | awk '{print $1}')
-  echo $KAFKA_PID > "$KAFKA_HOME/pid"
+
+  if [ ! -f "$KAFKA_HOME/pid" ]; then
+    nohup bin/kafka-server-start.sh config/server.properties > \
+      "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
+  fi
+  
+  echo $! > "$KAFKA_HOME/pid"
 }
 
 test_kafka() {
