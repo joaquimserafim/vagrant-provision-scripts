@@ -60,7 +60,6 @@ start_kafka() {
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
-  
   nohup bin/kafka-server-start.sh config/server.properties > \
   "$KAFKA_LOG_DIR/$(date +%s).log" &
   KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep\
@@ -77,6 +76,10 @@ test_kafka() {
   done
 
   echo "a little test with kafka..."
+  # delete if exists
+  bin/kafka-run-class.sh kafka.admin.DeleteTopicCommand\
+    --zookeeper localhost:2181 --topic test
+  # create topic
   bin/kafka-topics.sh --create --zookeeper localhost:2181 \
     --replication-factor 1 --partitions 1 --topic test
   KAFKA_RES=$(bin/kafka-topics.sh --list --zookeeper localhost:2181)
@@ -85,7 +88,15 @@ test_kafka() {
 
 kafka_monitor() {
   cd $KAFKA_HOME
-  curl -s -LOk $KAFKA_MONITOR_URL
+  if [ ! -f "KafkaOffsetMonitor-assembly-$KAFKA_MONITOR_VERSION.jar"]
+    curl -s -LOk $KAFKA_MONITOR_URL
+  fi
+  #java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
+  com.quantifind.kafka.offsetapp.OffsetGetterWeb \
+    --zk localhost \
+    --port 8080 \
+    --refresh 10.seconds \
+    --retain 2.days
 }
 
 if [ ! -d "$KAFKA_HOME" ]; then
