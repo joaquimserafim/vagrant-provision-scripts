@@ -78,8 +78,8 @@ test_kafka() {
   echo "a little test with kafka..."
   # delete if exists
   bin/kafka-run-class.sh kafka.admin.DeleteTopicCommand\
-    --zookeeper localhost:2181 --topic test
-  # create topic
+    --zookeeper localhost:2181 --topic test 1> /dev/null 2>&1
+  # create a topic
   bin/kafka-topics.sh --create --zookeeper localhost:2181 \
     --replication-factor 1 --partitions 1 --topic test
   KAFKA_RES=$(bin/kafka-topics.sh --list --zookeeper localhost:2181)
