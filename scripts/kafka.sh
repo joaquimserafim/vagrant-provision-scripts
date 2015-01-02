@@ -95,7 +95,7 @@ kafka_monitor() {
     com.quantifind.kafka.offsetapp.OffsetGetterWeb \
     --zk localhost \
     --port 8080 \
-    --refresh 10.seconds \
+    --refresh 30.seconds \
     --retain 2.days
 }
 
