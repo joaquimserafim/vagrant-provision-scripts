@@ -8,9 +8,9 @@ KAFKA_DIR="$KAFKA_HOME/kafka_$SACLA_VERSION-$KAFKA_VERSION"
 
 get_pid() {
   if [ -f "$KAFKA_HOME/pid" ]; then
-    return $(<"$KAFKA_HOME/pid")
+    echo $(<"$KAFKA_HOME/pid")
   else
-    return ""
+    echo ""
   fi
 }
 
@@ -22,7 +22,7 @@ check_sudo() {
 }
 
 start() {
-  KAFKA_PID=get_pid
+  KAFKA_PID=$(get_pid)
   if [ -z "$KAFKA_PID" ]; then
     echo "starting kafka..."
     nohup "$KAFKA_DIR/bin/kafka-server-start.sh" \
@@ -37,7 +37,7 @@ start() {
 }
 
 stop() {
-  KAFKA_PID=get_pid
+  KAFKA_PID=$(get_pid)
   if [ ! -z $KAFKA_PID ]; then
     kill -15 $KAFKA_PID
     echo "sent a SIGTERM to kafka PID $KAFKA_PID..."
@@ -48,7 +48,7 @@ stop() {
 }
 
 status() {
-  KAFKA_PID=get_pid
+  KAFKA_PID=$(get_pid)
   if [ -z "$KAFKA_PID" ]; then
     echo "kafka(v$KAFKA_VERSION) isn't running"
   else
