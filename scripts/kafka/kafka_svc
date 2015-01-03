@@ -27,9 +27,9 @@ start() {
      "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
     echo $! > "$KAFKA_HOME/pid"
     sleep 5
-    echo "kafka PID: $(<$KAFKA_HOME/pid)"
+    echo "kafka(v$KAFKA_VERSION) PID: $(<$KAFKA_HOME/pid)"
   else
-    echo "Warning: kafka is alredy running!" >&2
+    echo "Warning: kafka(v$KAFKA_VERSION) is alredy running!" >&2
   fi
 }
 
@@ -38,7 +38,7 @@ stop() {
   #grep -v grep | awk '{print $2}'`; do
   if [ ! -z $KAFKA_PID ]; then
     kill -15 $KAFKA_PID
-    echo "sent a SIGTERM to kafka($KAFKA_PID)..."
+    echo "sent a SIGTERM to kafka, PID $KAFKA_PID..."
     rm -rf "$KAFKA_HOME/pid"
     sleep 5
     KAFKA_PID=""
@@ -47,9 +47,9 @@ stop() {
 
 status() {
   if [ -z "$KAFKA_PID" ]; then
-    echo "kafka isn't running"
+    echo "kafka(v$KAFKA_VERSION) isn't running"
   else
-    echo "kafka is running with the PID $KAFKA_PID"
+    echo "kafka(v$KAFKA_VERSION) is running with the PID $KAFKA_PID"
   fi
 }
 

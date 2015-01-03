@@ -63,6 +63,7 @@ start_kafka() {
       "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
     echo $! > "$KAFKA_HOME/pid"
   fi
+  echo "kafka version $KAFKA_VERSION"
 }
 
 test_kafka() {
