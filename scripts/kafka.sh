@@ -60,18 +60,14 @@ start_kafka() {
     mkdir $KAFKA_LOG_DIR
   fi
 
-  if [ ! -f "$KAFKA_HOME/pid" ]; then
-    nohup bin/kafka-server-start.sh config/server.properties > \
-      "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
-    echo $! > "$KAFKA_HOME/pid"
-  fi
+  service kafka start
   echo "kafka version $KAFKA_VERSION"
 }
 
 test_kafka() {
   KAFKA_PID=""
   while [ -z "$KAFKA_PID" ] && [ -d "/proc/$KAFKA_PID" ]; do
-    KAFKA_PID=$(<"$KAFKA_HOME/pid")
+    KAFKA_PID=$(</var/run/kafka.pid)
     sleep 2
   done
 
