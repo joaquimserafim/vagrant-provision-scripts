@@ -6,11 +6,13 @@ SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_DIR="$KAFKA_HOME/kafka_$SACLA_VERSION-$KAFKA_VERSION"
 
-if [ -f "$KAFKA_HOME/pid" ]; then
-  KAFKA_PID=$(<"$KAFKA_HOME/pid")
-else
-  KAFKA_PID=""
-fi
+get_pid() {
+  if [ -f "$KAFKA_HOME/pid" ]; then
+    return $(<"$KAFKA_HOME/pid")
+  else
+    return ""
+  fi
+}
 
 check_sudo() {
   if [ "$EUID" -ne 0 ]
@@ -20,6 +22,7 @@ check_sudo() {
 }
 
 start() {
+  KAFKA_PID=get_pid
   if [ -z "$KAFKA_PID" ]; then
     echo "starting kafka..."
     nohup "$KAFKA_DIR/bin/kafka-server-start.sh" \
@@ -34,8 +37,7 @@ start() {
 }
 
 stop() {
-  #for pid in `ps -ef | grep kafka | grep -v kafka_svc | \
-  #grep -v grep | awk '{print $2}'`; do
+  KAFKA_PID=get_pid
   if [ ! -z $KAFKA_PID ]; then
     kill -15 $KAFKA_PID
     echo "sent a SIGTERM to kafka PID $KAFKA_PID..."
@@ -46,6 +48,7 @@ stop() {
 }
 
 status() {
+  KAFKA_PID=get_pid
   if [ -z "$KAFKA_PID" ]; then
     echo "kafka(v$KAFKA_VERSION) isn't running"
   else
