@@ -26,9 +26,8 @@ SLF4J_VERSION="1.7.2"
 
 set_kafka_svc() {
   curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc > \
-  /usr/local/bin/kafka_svc
-  chmod +x /usr/local/bin/kafka_svc
-  cp -f /usr/local/bin/kafka_svc /etc/init.d/kafka
+    /etc/init.d/kafka
+  chmod +x /etc/init.d/kafka
 }
 
 slf4j(){
