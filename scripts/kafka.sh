@@ -14,8 +14,10 @@ check_zookeekper() {
 check_zookeekper
 
 SCRIPT_PID=$$
+
 SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
+
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
 KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/$KAFKA_ENV.tgz"
 KAFKA_HOME="/opt/kafka"
@@ -86,19 +88,23 @@ test_kafka() {
   # to be implemented
 #}
 
-if [ ! -d "$KAFKA_HOME" ]; then
-  mkdir $KAFKA_HOME
-fi
+main() {
+  if [ ! -d "$KAFKA_HOME" ]; then
+    mkdir $KAFKA_HOME
+  fi
 
-cd $KAFKA_HOME
+  cd $KAFKA_HOME
 
-if [ ! -d "$KAFKA_ENV" ]; then
-  dwl_kafka
-  change_jvm_head_size
-  slf4j
-  set_kafka_svc
-fi
+  if [ ! -d "$KAFKA_ENV" ]; then
+    dwl_kafka
+    change_jvm_head_size
+    slf4j
+    set_kafka_svc
+  fi
 
-cd "$KAFKA_ENV"
-start_kafka
-test_kafka
+  cd "$KAFKA_ENV"
+  start_kafka
+  test_kafka
+}
+
+main
