@@ -83,9 +83,9 @@ test_kafka() {
   echo "response: $KAFKA_RES"
 }
 
-kafka_monitor() {
+#kafka_monitor() {
   # to be implemented
-}
+#}
 
 if [ ! -d "$KAFKA_HOME" ]; then
   mkdir $KAFKA_HOME
