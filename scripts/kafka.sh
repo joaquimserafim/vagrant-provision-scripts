@@ -65,9 +65,8 @@ start_kafka() {
   if [ ! -f "$KAFKA_HOME/pid" ]; then
     nohup bin/kafka-server-start.sh config/server.properties > \
       "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
+    echo $! > "$KAFKA_HOME/pid"
   fi
-  
-  echo $! > "$KAFKA_HOME/pid"
 }
 
 test_kafka() {
@@ -89,16 +88,7 @@ test_kafka() {
 }
 
 kafka_monitor() {
-  cd $KAFKA_HOME
-  if [ ! -f "KafkaOffsetMonitor-assembly-$KAFKA_MONITOR_VERSION.jar" ]; then
-    curl -s -LOk $KAFKA_MONITOR_URL
-  fi
-  java -cp KafkaOffsetMonitor-assembly-0.2.0.jar \
-    com.quantifind.kafka.offsetapp.OffsetGetterWeb \
-    --zk localhost \
-    --port 8080 \
-    --refresh 30.seconds \
-    --retain 2.days
+  # to be implemented
 }
 
 if [ ! -d "$KAFKA_HOME" ]; then
@@ -117,4 +107,3 @@ fi
 cd "$KAFKA_ENV"
 start_kafka
 test_kafka
-kafka_monitor
