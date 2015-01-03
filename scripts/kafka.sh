@@ -62,7 +62,8 @@ start_kafka() {
     nohup bin/kafka-server-start.sh config/server.properties > \
       "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
     echo $! > "$KAFKA_HOME/pid"
-    (crontab -l -u vagrant ; echo "@reboot kafka_svc start") | crontab -
+    curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/upstart_kafka.conf > \
+      /etc/init/kafka.conf
   fi
   echo "kafka version $KAFKA_VERSION"
 }
