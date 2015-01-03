@@ -73,9 +73,8 @@ start_kafka() {
 test_kafka() {
   KAFKA_PID=""
   while [ -z "$KAFKA_PID" ] && [ -d "/proc/$KAFKA_PID" ]; do
-    KAFKA_PID=$(ps -eo pid,command | grep kafka | grep -v grep\
-     | awk '{print $1}')
-    sleep 1
+    KAFKA_PID=$(<"$KAFKA_HOME/pid")
+    sleep 2
   done
 
   echo "a little test with kafka..."
