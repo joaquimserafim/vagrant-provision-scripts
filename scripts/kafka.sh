@@ -25,9 +25,11 @@ SLF4J_URL="http://www.slf4j.org/dist"
 SLF4J_VERSION="1.7.2"
 
 set_kafka_svc() {
-  curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc > \
+  curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka > \
     /etc/init.d/kafka
   chmod +x /etc/init.d/kafka
+  curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka.conf > \
+    /etc/init/kafka.conf
 }
 
 slf4j(){

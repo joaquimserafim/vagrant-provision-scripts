@@ -1,0 +1,24 @@
+#!/bin/bash
+
+SACLA_VERSION="2.9.2"
+KAFKA_VERSION="0.8.1.1"
+
+KAFKA_HOME="/opt/kafka"
+KAFKA_LOG_DIR="/var/log/kafka"
+KAFKA_DIR="$KAFKA_HOME/kafka_$SACLA_VERSION-$KAFKA_VERSION"
+
+start() {
+  "$KAFKA_DIR/bin/kafka-server-start.sh" \
+    "$KAFKA_DIR/config/server.properties" > \
+    "$KAFKA_LOG_DIR/$(date +%s).log"
+}
+
+
+case "$1" in
+  start)
+    start
+    ;;
+  *)
+    echo "This script is to be used with Upstart!"
+    ;;
+esac
