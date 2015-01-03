@@ -26,7 +26,7 @@ start() {
      "$KAFKA_DIR/config/server.properties" > \
      "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
     echo $! > "$KAFKA_HOME/pid"
-    sleep 5
+    sleep 2
     echo "kafka(v$KAFKA_VERSION) PID $(<$KAFKA_HOME/pid)"
   else
     echo "Warning: kafka(v$KAFKA_VERSION) is alredy running!" >&2
@@ -40,7 +40,7 @@ stop() {
     kill -15 $KAFKA_PID
     echo "sent a SIGTERM to kafka PID $KAFKA_PID..."
     rm -rf "$KAFKA_HOME/pid"
-    sleep 5
+    sleep 2
     KAFKA_PID=""
   fi
 }

@@ -28,6 +28,7 @@ set_kafka_svc() {
   curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc > \
   /usr/local/bin/kafka_svc
   chmod +x /usr/local/bin/kafka_svc
+  cp -f /usr/local/bin/kafka_svc /etc/init.d/kafka
 }
 
 slf4j(){
@@ -62,8 +63,6 @@ start_kafka() {
     nohup bin/kafka-server-start.sh config/server.properties > \
       "$KAFKA_LOG_DIR/$(date +%s).log" 2>&1&
     echo $! > "$KAFKA_HOME/pid"
-    curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/upstart_kafka.conf > \
-      /etc/init/kafka.conf
   fi
   echo "kafka version $KAFKA_VERSION"
 }
