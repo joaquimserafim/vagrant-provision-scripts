@@ -18,16 +18,11 @@ SACLA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
 KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/$KAFKA_ENV.tgz"
-KAFKA_HOME="/home/kafka"
+KAFKA_HOME="/opt/kafka"
 KAFKA_LOG_DIR="/var/log/kafka"
 
 SLF4J_URL="http://www.slf4j.org/dist"
 SLF4J_VERSION="1.7.2"
-
-KAFKA_MONITOR_VERSION="0.2.0"
-KAFKA_MONITOR_URL="https://github.com/quantifind/\
-KafkaOffsetMonitor/releases/download/v$KAFKA_MONITOR_VERSION\
-/KafkaOffsetMonitor-assembly-$KAFKA_MONITOR_VERSION.jar"
 
 set_kafka_svc() {
   curl -s https://raw.githubusercontent.com/joaquimserafim/vagrant-provision-scripts/master/scripts/kafka/kafka_svc > \
@@ -40,7 +35,7 @@ slf4j(){
   curl -s -LOk "$SLF4J_URL/slf4j-$SLF4J_VERSION.tar.gz"
   tar zxf "slf4j-$SLF4J_VERSION.tar.gz"
   cp -f "slf4j-$SLF4J_VERSION/slf4j-nop-$SLF4J_VERSION.jar" "$KAFKA_ENV/libs/"
-  rm -rf slf4j-1.7.2*
+  rm -rf "slf4j-$SLF4J_VERSION"*
 }
 
 change_jvm_head_size() {
@@ -54,6 +49,7 @@ change_jvm_head_size() {
 dwl_kafka() {
   curl -s -LOk $KAFKA_URL
   tar zxf "$KAFKA_ENV.tgz"
+  rm -rf "$KAFKA_ENV.tgz"
   cd "$KAFKA_ENV"
 }
 
