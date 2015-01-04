@@ -14,5 +14,6 @@ curl -s -o /etc/mongod.conf https://raw.githubusercontent\
 .com/joaquimserafim/vagrant-provision-scripts/master/scripts\
 /mongodb/mongod.conf
 
-service mongod restart
+service mongod stop
+service mongod start
 mongod --version | sed -n 1p
