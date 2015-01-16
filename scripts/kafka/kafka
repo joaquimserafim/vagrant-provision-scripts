@@ -16,7 +16,7 @@ start() {
 }
 
 stop() {
-  PID=$(<"/var/run/kafka/kafka.pid")
+  PID=$(<"/var/run/kafka.pid")
   kill -15 $PID
 }
 
