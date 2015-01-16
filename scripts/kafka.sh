@@ -73,11 +73,12 @@ test_kafka() {
     sleep 1
   done
 
-  sleep 1
+  sleep 2
   echo "a little test with kafka..."
   # delete if exists
   bin/kafka-run-class.sh kafka.admin.DeleteTopicCommand\
     --zookeeper localhost:2181 --topic test 1> /dev/null 2>&1
+  sleep 1
   # create a topic
   bin/kafka-topics.sh --create --zookeeper localhost:2181 \
     --replication-factor 1 --partitions 1 --topic test
