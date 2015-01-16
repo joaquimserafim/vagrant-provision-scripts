@@ -13,11 +13,11 @@ start() {
   "$KAFKA_DIR/bin/kafka-server-start.sh" \
     "$KAFKA_DIR/config/server.properties" > \
     "$KAFKA_LOG_DIR/$(date +%s).log"
-  echo $! > /var/run/kafka_.pid
 }
 
 stop() {
-
+  PID=$(<"/var/run/kafka/kafka.pid")
+  kill -15 $PID
 }
 
 case "$1" in

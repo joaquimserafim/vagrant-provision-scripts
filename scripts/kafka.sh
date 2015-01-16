@@ -69,11 +69,11 @@ start_kafka() {
 test_kafka() {
   KAFKA_PID=""
   while [ -z "$KAFKA_PID" ] && [ -d "/proc/$KAFKA_PID" ]; do
-    KAFKA_PID=$(</var/run/kafka.pid)
+    KAFKA_PID=$(</var/run/kafka/kafka.pid)
     sleep 1
   done
 
-  sleep 2
+  sleep 1
   echo "a little test with kafka..."
   # delete if exists
   bin/kafka-run-class.sh kafka.admin.DeleteTopicCommand\
