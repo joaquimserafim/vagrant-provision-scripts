@@ -61,7 +61,7 @@ start_kafka() {
   if [ ! -d "$KAFKA_LOG_DIR" ]; then
     mkdir $KAFKA_LOG_DIR
   fi
-
+  sleep 1
   service kafka start
   echo "kafka version $KAFKA_VERSION"
 }
