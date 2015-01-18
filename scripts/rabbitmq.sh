@@ -6,7 +6,7 @@ RABBITMQ_PASSWORD=vagrant
 # add the source for rabbitmq
 echo "deb http://www.rabbitmq.com/debian/ testing main" >> "/etc/apt/sources.list"  1> /dev/null 2>&1
 wget http://www.rabbitmq.com/rabbitmq-signing-key-public.asc  1> /dev/null 2>&1
-apt-key add rabbitmq-signing-key-public.asc  1> /dev/null 2>&1
+apt-key add rabbitmq-signing-key-public.asc 1> /dev/null 2>&1
 
 # install rabbitmq
 apt-get install -y rabbitmq-server 1> /dev/null 2>&1
