@@ -12,12 +12,15 @@ SCRIPT_PID=$$
 start() {
   "$KAFKA_DIR/bin/kafka-server-start.sh" \
     "$KAFKA_DIR/config/server.properties" > \
-    "$KAFKA_LOG_DIR/$(date +%s).log"
+    "$KAFKA_LOG_DIR/kafka.log"
 }
 
 stop() {
-  PID=$(<"/var/run/kafka.pid")
-  kill -15 $PID
+  PID=$(</var/run/kafka.pid)
+  kill -9 $PID
+  if [ -f /var/run/kafka.pid ]; then
+    rm -rf /var/run/kafka.pid
+  fi
 }
 
 case "$1" in
