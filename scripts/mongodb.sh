@@ -10,10 +10,10 @@ apt-get update 1> /dev/null 2>&1
 apt-get install -y mongodb-org 1> /dev/null 2>&1
 
 # donwload mongodb.conf
-curl -s -o /etc/mongod.conf https://raw.githubusercontent\
-.com/joaquimserafim/vagrant-provision-scripts/master/scripts\
-/mongodb/mongod.conf
+#curl -s -o /etc/mongod.conf https://raw.githubusercontent\
+#.com/joaquimserafim/vagrant-provision-scripts/master/scripts\
+#/mongodb/mongod.conf
 
-service mongod stop
-service mongod start
+#service mongod stop
+#service mongod start
 mongod --version | sed -n 1p
