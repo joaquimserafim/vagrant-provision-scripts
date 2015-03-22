@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 RABBITMQ_USER=vagrant
 RABBITMQ_PASSWORD=vagrant
