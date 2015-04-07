@@ -15,10 +15,10 @@ check_zookeekper
 
 SCRIPT_PID=$$
 
-SACLA_VERSION="2.9.2"
+SCALA_VERSION="2.9.2"
 KAFKA_VERSION="0.8.1.1"
 
-KAFKA_ENV="kafka_$SACLA_VERSION-$KAFKA_VERSION"
+KAFKA_ENV="kafka_$SCALA_VERSION-$KAFKA_VERSION"
 KAFKA_URL="http://mirrors.ircam.fr/pub/apache/kafka/0.8.1.1/$KAFKA_ENV.tgz"
 KAFKA_HOME="/opt/kafka"
 KAFKA_LOG_DIR="/var/log/kafka"
